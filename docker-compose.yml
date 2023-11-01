@@ -4,7 +4,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: sonarsoftware/customerportal:stable
+    image: "galax-portal-customized:stable"
     container_name: sonar-customerportal
     restart: always
     tty: true
@@ -12,6 +12,7 @@ services:
       - "80:80"
       - "443:443"
     volumes:
+      - ./:/var/www/html:delegated
       - ./data/certbot/conf:/etc/letsencrypt
       - ./data/certbot/www:/var/www/certbot
       - ./public/assets/img/logo.png:/var/www/html/public/assets/img/logo.png
@@ -35,13 +36,6 @@ services:
     volumes:
       - ./data/certbot/conf:/etc/letsencrypt
       - ./data/certbot/www:/var/www/certbot
-
-  watchtower:
-    image: v2tec/watchtower
-    restart: always
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-    command: sonar-customerportal
 
 volumes:
   storage:
