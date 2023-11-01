@@ -71,4 +71,6 @@ return [
     'saveAsAutoPayMethodBank' => 'Automatically charge this bank account for all future invoices',
     'bankAccountAdded' => 'Bank account added successfully.',
     'cvc' => 'CVC',
+    'institution' => '3 digit Institution',
+    'transit' => '5 digit Transit/Branch Number'
 ];

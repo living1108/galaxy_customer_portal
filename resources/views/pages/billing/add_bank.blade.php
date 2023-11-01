@@ -33,19 +33,23 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-lg-12 col-12">
+                    <div class="col-lg-6 col-12">
                         <div class="form-group">
                             <label for="account_number">{{utrans("billing.accountNumber")}}</label>
                             {!! Form::tel("account_number",null,['id' => 'account_number', 'autocomplete' => 'account_number', 'class' => 'form-control', 'placeholder' => utrans("billing.accountNumber")]) !!}
                         </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-12 col-12">
                         <div class="form-group">
-                            <label for="routing_number">{{utrans("billing.routingNumber")}}</label>
-                            {!! Form::tel("routing_number",null,['id' => 'routing_number', 'autocomplete' => 'routing_number', 'class' => 'form-control', 'placeholder' => utrans("billing.routingNumber")]) !!}
+                            <label for="institution">{{utrans("billing.institution")}}</label>
+                            {!! Form::tel("institution",null,['id' => 'institution', 'autocomplete' => 'institution', 'class' => 'form-control', 'placeholder' => utrans("billing.institution")]) !!}
                         </div>
+                        <div class="form-group">
+                            <label for="transit">{{utrans("billing.transit")}}</label>
+                            {!! Form::tel("transit",null,['id' => 'transit', 'autocomplete' => 'transit', 'class' => 'form-control', 'placeholder' => utrans("billing.transit")]) !!}
+                        </div>
+                        
+                    </div>
+                    <div class="col-lg-6 col-12">
+                        <img src="/assets/img/sample-cheque.jpg" />
                     </div>
                 </div>
                 <div class="row">

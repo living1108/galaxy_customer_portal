@@ -70,4 +70,6 @@ return [
     'accountType' => 'Type de compte',
     'saveAsAutoPayMethodBank' => 'Débiter automatiquement ce compte bancaire pour toutes les factures à venir',
     'bankAccountAdded' => 'Compte bancaire ajouté avec succès.',
+    'institution' => 'Institution',
+    'transit' => 'Transit'
 ];
