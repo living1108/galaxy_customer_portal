@@ -22,7 +22,9 @@ class CreateBankAccountRequest extends FormRequest
         return [
             'name' => 'required|string|max:255',
             'account_number' => 'required|numeric',
-            'routing_number' => 'required|numeric|digits:9',
+            'institution' => 'required|numeric|digits:3',
+            'transit' => 'required|numeric|digits:5',
+            'routing_number' => 'numeric|digits:9',
             'account_type' => 'required|string|in:checking,savings',
             'country' => 'required|string',
             'line1' => 'required|string',

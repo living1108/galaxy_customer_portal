@@ -368,11 +368,12 @@ class BillingController extends Controller
      */
     public function storeBank(CreateBankAccountRequest $request): RedirectResponse
     {
+
         if (config('customer_portal.enable_bank_payments') != true) {
             return redirect()->back()->withErrors(utrans('errors.failedToCreateBankAccount'))->withInput();
         }
 
-        try {
+	    try {
             $bankAccount = $this->createBankAccountObjectFromRequest($request);
         } catch (Exception $e) {
             return redirect()->back()->withErrors($e->getMessage())->withInput();
@@ -749,11 +750,13 @@ class BillingController extends Controller
 
     private function createBankAccountObjectFromRequest(CreateBankAccountRequest $request): BankAccount
     {
+        $routingNumber = '0' . trim($request->input('institution')).trim($request->input('transit'));
+       
         return new BankAccount([
             'name' => trim($request->input('name')),
             'type' => trim($request->input('account_type')),
             'account_number' => trim($request->input('account_number')),
-            'routing_number' => trim($request->input('routing_number')),
+            'routing_number' => trim($routingNumber),
         ]);
     }
 
