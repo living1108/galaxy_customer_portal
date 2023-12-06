@@ -1,3 +1,10 @@
+#Custom Build for Galaxy Fibre
+
+This is a custom build of the sonar customer portal for Galaxy Fibre. Install per instructions from the Sonar Customer Portal repository below, but clone this repository instead of the the original repository.
+
+
+
+
 [![Customer Portal](https://i.imgur.com/AMoOuyg.png)](https://github.com/SonarSoftwareInc/customer_portal)
 
 # Sonar Customer Portal
@@ -21,8 +28,7 @@ SSH into your VM.
 Install required packages:
 `sudo apt-get -y update && sudo apt-get -y upgrade && sudo apt-get -y install git unzip`
 
-Clone the repository:
-`git clone https://github.com/SonarSoftwareInc/customer_portal.git`
+Clone the repository:  NOTE: For Galaxy fibre, do not clone the repository listed below.  Only clone the custom repository.
 
 Now change directory into the repository that we've just cloned:
 `cd customer_portal`
