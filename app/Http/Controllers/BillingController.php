@@ -46,6 +46,7 @@ class BillingController extends Controller
 
     public function index(): Factory|View
     {
+
         $billingDetails = $this->getAccountBillingDetails();
         $invoices = $this->getInvoices();
         $invoices = $this->paginate($invoices, 5, false, ['path' => '/portal/billing/invoices']);
@@ -214,13 +215,15 @@ class BillingController extends Controller
      */
     public function deletePaymentMethod($id): RedirectResponse
     {
+
         $paymentMethods = $this->getPaymentMethods();
+
+      
         foreach ($paymentMethods as $paymentMethod) {
             if ((int) $paymentMethod->id === (int) $id) {
                 try {
                     $this->accountBillingController->deletePaymentMethodByID(get_user()->account_id, $id);
                     $this->clearBillingCache();
-
                     return redirect()
                         ->action([BillingController::class, 'index'])
                         ->with('success', utrans('billing.creditCardDeleted'));
@@ -229,6 +232,7 @@ class BillingController extends Controller
                 }
             }
         }
+       // $this->clearBillingCache();
 
         return redirect()->back()->withErrors(utrans('errors.paymentMethodNotFound'));
     }
@@ -750,6 +754,8 @@ class BillingController extends Controller
 
     private function createBankAccountObjectFromRequest(CreateBankAccountRequest $request): BankAccount
     {
+        //Create a routing number by concatenating the institution and transit number, then prepending with a 0
+        
         $routingNumber = '0' . trim($request->input('institution')).trim($request->input('transit'));
        
         return new BankAccount([
