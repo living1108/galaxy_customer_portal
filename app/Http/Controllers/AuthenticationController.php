@@ -123,7 +123,7 @@ class AuthenticationController extends Controller
         $languageService = App::make(LanguageService::class);
         $language = $languageService->getUserLanguage($request);
         try {
-            Log::info(config('app.url').'/create/'.$creationToken->token);
+            //Log::info(config('app.url').'/create/'.$creationToken->token);
             Mail::send('emails.basic', [
                 'greeting' => trans('emails.greeting', [], $language),
                 'body' => trans('emails.accountCreateBody', [
