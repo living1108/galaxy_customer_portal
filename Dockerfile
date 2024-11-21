@@ -28,7 +28,6 @@ RUN mkdir -p vendor \
  && COMPOSER_CACHE_DIR=/dev/null setuser www-data /tmp/composer install --no-dev --no-interaction --no-scripts --no-autoloader
 
 COPY --chown=www-data . .
-
 RUN COMPOSER_CACHE_DIR=/dev/null setuser www-data /tmp/composer install --no-dev --no-interaction --no-scripts --classmap-authoritative \
  && rm -rf /tmp/composer
 
@@ -47,6 +46,8 @@ COPY deploy/services/php-fpm.sh /etc/service/php-fpm/run
 
 RUN mkdir /etc/service/nginx
 COPY deploy/services/nginx.sh /etc/service/nginx/run
+
+COPY --chown=www0data ./app/Providers/AppServiceProvider.php ./app/Providers/AppServiceProvider.php
 
 VOLUME /var/www/html/storage
 EXPOSE 80 443
