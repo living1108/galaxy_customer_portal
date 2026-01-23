@@ -339,31 +339,40 @@ class BillingController extends Controller
      */
     public function storeCard(CreateCreditCardRequest $request): RedirectResponse
     {
+        Log::info('Storing new credit card');
         if (config('customer_portal.enable_credit_card_payments') == false) {
             throw new InvalidArgumentException(utrans('errors.creditCardPaymentsDisabled'));
         }
 
         try {
+            Log::info('Creating credit card object from request...');
             $card = $this->createCreditCardObjectFromRequest($request);
+            Log::info('Credit card object created successfully.');
         } catch (Exception $e) {
+            Log::info('Could not create credit card object from request: ' . $e->getMessage());
             return redirect()->back()->withErrors($e->getMessage())->withInput();
         }
 
         try {
+            Log::info('Sending credit card to billing system...');
             $this->accountBillingController->createCreditCard(
                 get_user()->account_id,
                 $card,
                 (bool) $request->input('auto')
             );
+            Log::info('Credit card successfully created in billing system.');
         } catch (Exception $e) {
+            Log::info('Failed to create credit card in billing system: ' . $e->getMessage());
             return redirect()->back()->withErrors(utrans('errors.failedToCreateCard'))->withInput();
         }
 
+        Log::info('Clearing variables...');
         unset($card);
         unset($request);
-
+        Log::info('Cleared variables. Clearing billing cache...');
         $this->clearBillingCache();
-
+        Log::info('Billing cache cleared. Redirecting to billing index with success message.');
+        
         return redirect()->action([BillingController::class, 'index'])->with('success', utrans('billing.cardAdded'));
     }
 
@@ -697,17 +706,26 @@ class BillingController extends Controller
     private function createCreditCardObjectFromRequest($request): CreditCard
     {
         $card = CreditCardValidator::validCreditCard(trim(str_replace(' ', '', $request->input('cc-number'))));
+        Log::info('Validating card number...');
         if ($card['valid'] !== true) {
+            Log::info('Card number is invalid.');
             throw new InvalidArgumentException(utrans('errors.invalidCreditCardNumber'));
         }
+        Log::info('Card number is valid.');
 
+        Log::info('Converting Expiration Date...');
         [$year, $month] = convertExpirationDateToYearAndMonth(
             $request->input('expirationDate')
         );
 
+        Log::info("Converted Expiration Date to Year: $year, Month: $month");
+        Log::info('Validating Expiration Date...');
+
         if (! CreditCardValidator::validDate($year, $month)) {
+            Log::info('Expiration Date is invalid.');
             throw new InvalidArgumentException(utrans('errors.invalidExpirationDate'));
         }
+        Log::info('Expiration Date is valid. Returning Credit Card Object.');
 
         return new CreditCard([
             'name' => $request->input('name'),
