@@ -73,8 +73,6 @@ export API_PASSWORD
 export SONAR_URL
 export EMAIL_ADDRESS
 
-docker pull sonarsoftware/customerportal:next
-
 echo "### Deleting old certificate for $NGINX_HOST ..."
 rm -rf ./data/certbot/conf/live/$NGINX_HOST && \
 rm -rf ./data/certbot/conf/archive/$NGINX_HOST && \
@@ -100,7 +98,7 @@ docker-compose run --rm \
         --force-renewal" certbot
 echo
 
-docker-compose up -d
+docker-compose up --build -d
 
 until [ "`docker inspect -f {{.State.Running}} sonar-customerportal`"=="true" ]; do
     sleep 0.1;
