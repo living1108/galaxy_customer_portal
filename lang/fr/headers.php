@@ -28,8 +28,9 @@ return [
     'dashboard' => 'Tableau de bord',
     'summary' => 'Sommaire',
     'purchaseAdditionalData' => 'Achat de données additionnelles',
-    'contracts' => 'Contrats',
+    'contracts' => 'Accords',
     'error' => 'Erreur!',
     'bankAccounts' => 'Comptes bancaires',
     'goCardLess' => 'sans gocard',
+    'account' => 'Compte',
 ];

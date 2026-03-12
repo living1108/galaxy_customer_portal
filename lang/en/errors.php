@@ -8,6 +8,7 @@ return [
     'paymentFailed' => 'Payment failed. Please check your details and try again.',
     'failedToUpdateProfile' => 'Failed to update profile. Please try again later.',
     'currentPasswordInvalid' => 'Current password is incorrect.',
+    'passwordIsTooWeak' => 'Password is generally too weak or contains simple dictionary words.',
     'failedToDownloadInvoice' => 'Failed to download invoice. Please try again later.',
     'mustSetEmailAddress' => 'You must set your email address before you can create a ticket.',
     'sectionDisabled' => 'That section is disabled.',
@@ -52,4 +53,5 @@ return [
     '500error' => '500 Error',
     'apiPermissionsFailure' => 'Your API user is not setup with the correct permissions. Verify the permissions are setup per the <a href="https://github.com/SonarSoftwareInc/customer_portal/blob/master/README.md#a-note-on-initial-setup">readme</a> document.',
     'stripePaymentMethodNotFound' => 'No Stripe PaymentMethod found with that ID',
+    'phoneNumberNotValid' => "A phone number cannot be saved. Please remove it and try again.",
 ];

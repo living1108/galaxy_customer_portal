@@ -10,6 +10,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use SonarSoftware\CustomerPortalFramework\Helpers\HttpHelper;
+use ZipArchive;
 
 class AppConfigController extends Controller
 {
@@ -30,7 +31,7 @@ class AppConfigController extends Controller
             $this->resetThrottleValue('settings', $request->getClientIp());
             $request->session()->put('settings_authenticated', 1);
 
-            return redirect()->action([\App\Http\Controllers\AppConfigController::class, 'show']);
+            return redirect()->action([AppConfigController::class, 'show']);
         }
 
         $this->incrementThrottleValue('settings', $request->getClientIp());
@@ -59,13 +60,15 @@ class AppConfigController extends Controller
 
             $paypalCurrency = $this->paypalCurrency();
 
+            $currencies = $this->allCurrencies();
+
             return view('pages.config.show', compact(
                 'inboundEmailAccounts',
                 'ticketGroups',
                 'systemSetting',
-                'paypalCurrency'
-            )
-            );
+                'paypalCurrency',
+                'currencies',
+            ));
         }
 
         return view('pages.config.auth');
@@ -89,6 +92,18 @@ class AppConfigController extends Controller
             if ($request->hasFile('cover')) {
                 $request->file('cover');
                 $request->file('cover')->move(base_path('public/assets/img/'), 'cover.png');
+            }
+
+            if ($request->hasFile('fcclabels')) {
+                $request->file('fcclabels');
+                $request->file('fcclabels')->move(base_path('public/assets/fcclabels/'), 'labels.zip');
+                $zip = new ZipArchive;
+                if ($zip->open(base_path('public/assets/fcclabels/labels.zip')) === TRUE) {
+                    $zip->extractTo(base_path('public/assets/fcclabels/'));
+                    $zip->close();
+                } else {
+                    echo 'failed';
+                }
             }
 
             /**
@@ -132,6 +147,16 @@ class AppConfigController extends Controller
                 'inbound_email_account_id',
                 'ticket_group_id',
                 'ticket_priority',
+                'return_refund_policy_link',
+                'privacy_policy_link',
+                'customer_service_contact_email',
+                'customer_service_contact_phone',
+                'company_address',
+                'transaction_currency',
+                'delivery_policy_link',
+                'consumer_data_privacy_policy_link',
+                'secure_checkout_policy_link',
+                'terms_and_conditions_link',
             ]));
 
             /**
@@ -141,7 +166,7 @@ class AppConfigController extends Controller
 
             $systemSetting->save();
 
-            return redirect()->action([\App\Http\Controllers\AppConfigController::class, 'show']);
+            return redirect()->action([AppConfigController::class, 'show']);
         }
 
         abort(401);
@@ -175,6 +200,144 @@ class AppConfigController extends Controller
             'CHF' => 'CHF',
             'THB' => 'THB',
             'XCD' => 'XCD',
+        ];
+    }
+
+    private function allCurrencies(): array
+    {
+        return [
+            'USD' => 'USD',
+            'CAD' => 'CAD',
+            'EUR' => 'EUR',
+            'GBP' => 'GBP',
+            'AED' => 'AED',
+            'AFN' => 'AFN',
+            'ALL' => 'ALL',
+            'AMD' => 'AMD',
+            'ANG' => 'ANG',
+            'AOA' => 'AOA',
+            'ARS' => 'ARS',
+            'AUD' => 'AUD',
+            'AWG' => 'AWG',
+            'AZN' => 'AZN',
+            'BAM' => 'BAM',
+            'BBD' => 'BBD',
+            'BDT' => 'BDT',
+            'BGN' => 'BGN',
+            'BMD' => 'BMD',
+            'BND' => 'BND',
+            'BOB' => 'BOB',
+            'BRL' => 'BRL',
+            'BSD' => 'BSD',
+            'BTN' => 'BTN',
+            'BWP' => 'BWP',
+            'BYN' => 'BYN',
+            'BZD' => 'BZD',
+            'CDF' => 'CDF',
+            'CHF' => 'CHF',
+            'CNY' => 'CNY',
+            'COP' => 'COP',
+            'CRC' => 'CRC',
+            'CUC' => 'CUC',
+            'CUP' => 'CUP',
+            'CVE' => 'CVE',
+            'CZK' => 'CZK',
+            'DKK' => 'DKK',
+            'DOP' => 'DOP',
+            'DZD' => 'DZD',
+            'EGP' => 'EGP',
+            'ERN' => 'ERN',
+            'ETB' => 'ETB',
+            'FJD' => 'FJD',
+            'FKP' => 'FKP',
+            'GEL' => 'GEL',
+            'GHS' => 'GHS',
+            'GIP' => 'GIP',
+            'GMD' => 'GMD',
+            'GTQ' => 'GTQ',
+            'HKD' => 'HKD',
+            'HNL' => 'HNL',
+            'HTG' => 'HTG',
+            'HUF' => 'HUF',
+            'IDR' => 'IDR',
+            'ILS' => 'ILS',
+            'INR' => 'INR',
+            'IRR' => 'IRR',
+            'JMD' => 'JMD',
+            'KES' => 'KES',
+            'KGS' => 'KGS',
+            'KHR' => 'KHR',
+            'KPW' => 'KPW',
+            'KYD' => 'KYD',
+            'KZT' => 'KZT',
+            'LAK' => 'LAK',
+            'LBP' => 'LBP',
+            'LKR' => 'LKR',
+            'LRD' => 'LRD',
+            'LSL' => 'LSL',
+            'MAD' => 'MAD',
+            'MDL' => 'MDL',
+            'MGA' => 'MGA',
+            'MKD' => 'MKD',
+            'MMK' => 'MMK',
+            'MNT' => 'MNT',
+            'MOP' => 'MOP',
+            'MRU' => 'MRU',
+            'MUR' => 'MUR',
+            'MVR' => 'MVR',
+            'MWK' => 'MWK',
+            'MXN' => 'MXN',
+            'MYR' => 'MYR',
+            'MZN' => 'MZN',
+            'NAD' => 'NAD',
+            'NGN' => 'NGN',
+            'NIO' => 'NIO',
+            'NOK' => 'NOK',
+            'NPR' => 'NPR',
+            'NZD' => 'NZD',
+            'PAB' => 'PAB',
+            'PEN' => 'PEN',
+            'PGK' => 'PGK',
+            'PHP' => 'PHP',
+            'PKR' => 'PKR',
+            'PLN' => 'PLN',
+            'QAR' => 'QAR',
+            'RON' => 'RON',
+            'RSD' => 'RSD',
+            'RUB' => 'RUB',
+            'SAR' => 'SAR',
+            'SBD' => 'SBD',
+            'SCR' => 'SCR',
+            'SDG' => 'SDG',
+            'SEK' => 'SEK',
+            'SGD' => 'SGD',
+            'SHP' => 'SHP',
+            'SLL' => 'SLL',
+            'SOS' => 'SOS',
+            'SRD' => 'SRD',
+            'SSP' => 'SSP',
+            'STN' => 'STN',
+            'SVC' => 'SVC',
+            'SYP' => 'SYP',
+            'SZL' => 'SZL',
+            'THB' => 'THB',
+            'TJS' => 'TJS',
+            'TMT' => 'TMT',
+            'TOP' => 'TOP',
+            'TRY' => 'TRY',
+            'TTD' => 'TTD',
+            'TWD' => 'TWD',
+            'TZS' => 'TZS',
+            'UAH' => 'UAH',
+            'UYU' => 'UYU',
+            'UZS' => 'UZS',
+            'VES' => 'VES',
+            'WST' => 'WST',
+            'XCD' => 'XCD',
+            'YER' => 'YER',
+            'ZAR' => 'ZAR',
+            'ZMW' => 'ZMW',
+            'ZWL' => 'ZWL',
         ];
     }
 }
