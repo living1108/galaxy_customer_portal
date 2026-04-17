@@ -54,6 +54,8 @@ class AppServiceProvider extends ServiceProvider
                 'customer_portal.data_usage_enabled' => $systemSetting->data_usage_enabled,
                 'customer_portal.contracts_enabled' => $systemSetting->contracts_enabled,
                 'customer_portal.password_strength_required' => $systemSetting->password_strength_required,
+                'customer_portal.google_analytics_enabled' => $systemSetting->google_analytics_enabled,
+                'customer_portal.google_analytics_ga4_id' => $systemSetting->google_analytics_ga4_id,
 		'mail.mailers.smtp.host' => $systemSetting->mail_host,
                 'mail.mailers.smtp.port' => $systemSetting->mail_port,
                 'mail.mailers.smtp.username' => $systemSetting->mail_username,

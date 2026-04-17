@@ -582,6 +582,42 @@
             </div>
          </div>
       </div>
+      <div class="card">
+         <div class="card-header">
+            <h4 class="card-header-title text-muted">
+               <i class="fe fe-bar-chart-2 mr-3"></i> Google Analytics
+            </h4>
+         </div>
+         <div class="card-body">
+            <div class="row mt-1">
+               <div class="form-group">
+                  <div class="col-auto ">
+                     <!-- Toggle -->
+                     <div class="custom-control custom-checkbox-toggle mt-1">
+                        {{ Form::hidden('google_analytics_enabled',0) }}
+                        {!! Form::checkbox("google_analytics_enabled",1,$systemSetting->google_analytics_enabled,['id' => 'google_analytics_enabled', 'class' => 'custom-control-input', 'data-toggle' => 'tooltip', 'data-trigger' => 'hover','data-placement' => 'left','data-offset' => '3','data-html' => 'true', 'data-original-title' => 'Enable or disable Google Analytics tracking']) !!}
+                        <label class="custom-control-label" for="google_analytics_enabled"></label>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-auto mt-2">
+                  <label>
+                  Enable Google Analytics
+                  </label>
+               </div>
+            </div>
+            <div class="row mt-1">
+               <div class="col-12">
+                  <div class="form-group">
+                     <label>
+                     GA4 Measurement ID
+                     </label>
+                     {!! Form::text("google_analytics_ga4_id",$systemSetting->google_analytics_ga4_id,['id' => 'google_analytics_ga4_id', 'class' => 'form-control', 'placeholder' => "G-XXXXXXXXXX", 'data-toggle' => 'tooltip', 'data-trigger' => 'hover','data-placement' => 'left','data-offset' => '3','data-html' => 'true', 'data-original-title' => 'Your Google Analytics 4 measurement ID (e.g., G-XXXXXXXXXX)']) !!}
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
       <div class="row mt-1 mb-4">
          <div class="col-12">
             <button type="submit" class="btn btn-primary">
