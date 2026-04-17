@@ -1,3 +1,16 @@
+@if($analytics->isEnabled())
+<script nonce="{{ csp_nonce() }}">
+    // Get events from flash data passed via redirect, or from AnalyticsService
+    var pendingEvents = {!! json_encode(session('_pending_analytics_events', [])) !!};
+    if (pendingEvents.length === 0) {
+        pendingEvents = {!! json_encode($analytics->flushQueuedEvents()) !!};
+    }
+    window._pendingAnalyticsEvents = pendingEvents;
+</script>
+@endif
+
+@include('components.analytics-helper')
+
 <script nonce="{{ csp_nonce() }}">
 close=document.getElementById("close");close.addEventListener('click',function(){close.classList.add("csp_style3"); setTimeout(function(){ close.classList.add("csp_style1"); }, 600); },false);
    var _portal = {
