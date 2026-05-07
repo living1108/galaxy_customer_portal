@@ -49,7 +49,7 @@ RUN mkdir /etc/service/nginx
 COPY deploy/services/nginx.sh /etc/service/nginx/run
 
 # Ensure all app files are owned by www-data for volume mount compatibility
-RUN chown -R www-data:www-data /var/www/html
+#RUN chown -R www-data:www-data /var/www/html
 
 VOLUME /var/www/html/storage
 EXPOSE 80 443

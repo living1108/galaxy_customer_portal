@@ -17,11 +17,6 @@ services:
       - ./public/assets/img/logo.png:/var/www/html/public/assets/img/logo.png
       - ./public/assets/img/cover.png:/var/www/html/public/assets/img/cover.png
       - storage:/var/www/html/storage
-      # Development: Source code mounts for live editing
-      - .:/var/www/html:cached
-      - /var/www/html/vendor
-      - /var/www/html/node_modules
-      - /var/www/html/bootstrap/cache
     env_file:
      - .env
     environment:
