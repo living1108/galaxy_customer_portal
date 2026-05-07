@@ -43,6 +43,7 @@ class SonarCustomerPortalPolicy extends Basic
             ->addDirective(Directive::SCRIPT, [
                 'self',
                 'js.stripe.com',
+                'https://www.googletagmanager.com',
             ])
 
 			->addDirective(Directive::STYLE, [
@@ -53,6 +54,8 @@ class SonarCustomerPortalPolicy extends Basic
             ->addDirective(Directive::CONNECT, [
                 'self',
                 'api.stripe.com',
+                'https://www.google-analytics.com',
+                'https://www.google.com',
             ]);
     }
 }

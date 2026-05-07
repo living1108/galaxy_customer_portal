@@ -12,4 +12,15 @@
       <link rel="stylesheet" href="/assets/css/select2.css">
       <link rel="stylesheet" href="/assets/css/bootstrap-colorpicker.min.css">
       <link rel="stylesheet" href="/assets/css/Chart.min.css">
+      @if(config('customer_portal.google_analytics_enabled') && config('customer_portal.google_analytics_ga4_id'))
+      <!-- Google tag (gtag.js) -->
+      <script async src="https://www.googletagmanager.com/gtag/js?id={{ config('customer_portal.google_analytics_ga4_id') }}"></script>
+      <script nonce="{{ csp_nonce() }}">
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', '{{ config('customer_portal.google_analytics_ga4_id') }}');
+      </script>
+      @endif
    </head>

@@ -30,6 +30,7 @@ class SystemSetting extends Model
         'go_cardless_currency_code' => 'EUR',
         'paypal_currency_code' => 'USD',
         'stripe_enabled' => false,
+        'google_analytics_enabled' => false,
     ];
 
     protected $casts = [
@@ -42,5 +43,6 @@ class SystemSetting extends Model
         'data_usage_enabled' => 'boolean',
         'contracts_enabled' => 'boolean',
         'stripe_enabled' => 'boolean',
+        'google_analytics_enabled' => 'boolean',
     ];
 }

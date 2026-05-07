@@ -69,11 +69,23 @@ class AuthenticationController extends Controller
 
         $this->resetThrottleValue('login', $this->generateLoginThrottleHash($request));
 
+        // Track user login event
+        $analyticsService = app('AnalyticsService');
+        $analyticsService->queueEvent('user_login', [
+            'user_id' => $result->id ?? null,
+            'timestamp' => now()->toIso8601String(),
+        ]);
+
+        // Get the queued events and pass them via flash data
+        $pendingEvents = $analyticsService->flushQueuedEvents();
+
         $usernameLanguage = UsernameLanguage::firstOrNew(['username' => $request->input('username')]);
         $usernameLanguage->language = $request->input('language');
         $usernameLanguage->save();
 
-        return redirect()->action([\App\Http\Controllers\BillingController::class, 'index']);
+        return redirect()
+            ->action([\App\Http\Controllers\BillingController::class, 'index'])
+            ->with('_pending_analytics_events', $pendingEvents);
     }
 
     /**
